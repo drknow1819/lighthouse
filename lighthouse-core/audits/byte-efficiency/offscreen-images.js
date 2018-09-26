@@ -210,6 +210,10 @@ class OffscreenImages extends ByteEfficiencyAudit {
         // @ts-ignore - .timestamp will exist if throttlingMethod isn't lantern
         OffscreenImages.filterObservedResults(unfilteredResults, interactive.timestamp);
     } catch (err) {
+      // if the error is during a Lantern run, the result is irrevocable, so rethrow
+      if (context.settings.throttlingMethod === 'simulate') {
+        throw err;
+      }
       // use end of trace as a substitute for finding interactive time
       items = OffscreenImages.filterObservedResults(unfilteredResults,
         await artifacts.requestTraceOfTab(trace).then(tot => tot.timestamps.traceEnd));

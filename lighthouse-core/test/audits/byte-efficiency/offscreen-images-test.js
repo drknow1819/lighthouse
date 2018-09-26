@@ -53,7 +53,7 @@ function generateInteractiveFunc(desiredTimeInSeconds) {
 
 function generateInteractiveFuncError() {
   return () => Promise.reject(
-    new LHError.errors.NO_TTI_NETWORK_IDLE_PERIOD()
+    new LHError(LHError.errors.NO_TTI_NETWORK_IDLE_PERIOD)
   );
 }
 
@@ -269,40 +269,43 @@ describe('OffscreenImages audit', () => {
     });
   });
 
-  it('disregards images loaded after Trace End when interactive throws error (Lantern)', () => {
+  it('rethrow error when interactive throws error in Lantern', async () => {
     context = {settings: {throttlingMethod: 'simulate'}};
-
-    return UnusedImages.audit_({
-      ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
-        generateImage(generateSize(0, 0), [0, 0], generateRecord(100, 3), 'a'),
-        generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 4), 'b'),
-      ],
-      traces: {},
-      devtoolsLogs: {},
-      requestInteractive: generateInteractiveFuncError(),
-      requestTraceOfTab: generateTraceOfTab(2),
-    }, [], context, [], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 0);
-    });
+    try {
+      await UnusedImages.audit_({
+        ViewportDimensions: DEFAULT_DIMENSIONS,
+        ImageUsage: [
+          generateImage(generateSize(0, 0), [0, 0], generateRecord(100, 3), 'a'),
+          generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 4), 'b'),
+        ],
+        traces: {},
+        devtoolsLogs: {},
+        requestInteractive: generateInteractiveFuncError(),
+        requestTraceOfTab: generateTraceOfTab(2),
+      }, [], context, [], context);
+    } catch (err) {
+      return;
+    }
+    assert.ok(false);
   });
 
-  it('finds images loaded before Trace End when interactive throws error (Lantern)', () => {
+  it('finds images loaded before Trace End when interactive throws error (Lantern)', async () => {
     context = {settings: {throttlingMethod: 'simulate'}};
-
-    return UnusedImages.audit_({
-      ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
-        generateImage(generateSize(0, 0), [0, 0], generateRecord(100, 1), 'a'),
-        generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 4), 'b'),
-      ],
-      traces: {},
-      devtoolsLogs: {},
-      requestInteractive: generateInteractiveFuncError(),
-      requestTraceOfTab: generateTraceOfTab(2),
-    }, [], context, [], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 1);
-      assert.equal(auditResult.items[0].url, 'a');
-    });
+    try {
+      await UnusedImages.audit_({
+        ViewportDimensions: DEFAULT_DIMENSIONS,
+        ImageUsage: [
+          generateImage(generateSize(0, 0), [0, 0], generateRecord(100, 1), 'a'),
+          generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 4), 'b'),
+        ],
+        traces: {},
+        devtoolsLogs: {},
+        requestInteractive: generateInteractiveFuncError(),
+        requestTraceOfTab: generateTraceOfTab(2),
+      }, [], context, [], context);
+    } catch (err) {
+      return;
+    }
+    assert.ok(false);
   });
 });
