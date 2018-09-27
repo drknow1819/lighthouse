@@ -210,7 +210,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
         // @ts-ignore - .timestamp will exist if throttlingMethod isn't lantern
         OffscreenImages.filterObservedResults(unfilteredResults, interactive.timestamp);
     } catch (err) {
-      // if the error is during a Lantern run, the result is irrevocable, so rethrow
+      // if the error is during a Lantern run, end of trace may also be inaccurate, so rethrow
       if (context.settings.throttlingMethod === 'simulate') {
         throw err;
       }
