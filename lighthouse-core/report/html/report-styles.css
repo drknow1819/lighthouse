@@ -937,8 +937,11 @@ summary.lh-passed-audits-summary {
 /* Keep bytes columns narrow if they follow the URL column */
 .lh-table-column--url + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--bytes,
+.lh-table-column--url + .lh-table-column--ms, 
+.lh-table-column--url + .lh-table-column--ms + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--timespanMs {
-  max-width: var(--bytes-col-width);
+  /* max-width: var(--bytes-col-width); */
+  width: 12%;
 }
 
 .lh-table-column--code {
