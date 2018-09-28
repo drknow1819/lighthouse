@@ -821,19 +821,6 @@
   line-height: var(--header-line-height);
 }
 
-.lh-passed-audits[open] summary.lh-passed-audits-summary {
-  margin-bottom: calc(var(--default-padding) * 2);
-}
-
-summary.lh-passed-audits-summary {
-  margin: calc(var(--default-padding) * 2) var(--default-padding);
-  margin-left: var(--default-padding);
-  margin-bottom: 0;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-}
-
 #lh-log {
   position: fixed;
   background-color: #323232;
