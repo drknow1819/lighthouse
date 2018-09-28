@@ -919,16 +919,15 @@
 .lh-table-column--url {
   min-width: 250px;
   white-space: nowrap;
-  /* max-width: 0; */
 }
 
-/* Keep bytes columns narrow if they follow the URL column */
+/* Keep columns narrow if they follow the URL column */
+/* 12% width was found to be a good width for en and i18n without being too wide */
 .lh-table-column--url + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--ms, 
 .lh-table-column--url + .lh-table-column--ms + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--timespanMs {
-  /* max-width: var(--bytes-col-width); */
   width: 12%;
 }
 
