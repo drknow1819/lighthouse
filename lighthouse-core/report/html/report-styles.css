@@ -312,8 +312,8 @@
   background-color: #F8F9FA;
 }
 
-.lh-audit-group__summary::-webkit-details-marker,
-.lh-expandable-details__summary::-webkit-details-marker {
+.lh-audit-group > summary::-webkit-details-marker,
+.lh-expandable-details > summary::-webkit-details-marker {
   display: none;
 }
 
@@ -895,6 +895,7 @@ summary.lh-passed-audits-summary {
 .lh-table thead th {
   color: var(--medium-75-gray);
   font-weight: normal;
+  word-wrap: normal;
 }
 
 .lh-table tbody tr:nth-child(even) {
@@ -930,7 +931,7 @@ summary.lh-passed-audits-summary {
 .lh-table-column--url {
   min-width: 250px;
   white-space: nowrap;
-  max-width: 0;
+  /* max-width: 0; */
 }
 
 /* Keep bytes columns narrow if they follow the URL column */
